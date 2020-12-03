@@ -4,7 +4,7 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 module.exports = env => ({
   mode     : env.mode,
-  entry    : ['@babel/polyfill', './src/index.tsx'],
+  entry    : './src/index.tsx',
   output   : {
     path    : path.resolve(__dirname, 'dist'),
     filename: '[name].[id].js'
@@ -13,41 +13,38 @@ module.exports = env => ({
     contentBase       : path.resolve(__dirname, 'dist'),
     historyApiFallback: true,
     port              : 3030,
+    hot               : true,
+    publicPath        : '/',
     open              : true
   },
   resolve  : {
-    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    extensions: ['.js', 'jsx', '.ts', '.tsx'],
     alias     : {
       '@': path.resolve(__dirname, 'src'),
     },
   },
-  module: {
+  module   : {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.ts(x)?$/,
         exclude: /node_modules/,
-        use: ['babel-loader'],
-      },
-      {
-        test: /\.(ts|tsx)$/,
-        exclude: /node_modules/,
-        use: ['ts-loader'],
+        use: ['babel-loader', 'ts-loader'],
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use : ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
-        test: /\.(ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader',
+        test   : /\.(ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader : 'url-loader',
         options: {
-          name: '[hash].[ext]',
+          name : '[hash].[ext]',
           limit: 10000,
         },
       },
     ],
   },
-  plugins: [
+  plugins  : [
     new HtmlWebpackPlugin({
       template: 'public/index.html',
       filename: 'index.html'
