@@ -1,11 +1,7 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import './app.css';
 
 function App() {
-    const [color, setColor] = useState({
-        startColor: '',
-        endColor: ''
-    })
     const rectRef = useRef<HTMLDivElement>(null);
     const onClick = ():void => {
         const randomNum = Math.trunc(Math.random() * 100);
